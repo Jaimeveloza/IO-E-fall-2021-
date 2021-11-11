@@ -1,0 +1,42 @@
+// this is a very simple sketch that demonstrates how to place a video cam image into a canvas 
+
+let video;
+let pose;
+
+function setup(){
+createCanvas(500, 500);
+video = createCapture(VIDEO);
+video.hide();
+poseNet = ml5.poseNet(video, modelLoaded);
+poseNet.on('pose', gotPoses)    
+}
+
+function modelLoaded(){
+    console.log("modelLoaded function has been called so this work!!!!");
+};
+
+function gotPoses(poses){
+    console.log(poses);
+    if( poses.length >0 ){
+        pose = poses[0].pose;
+    } 
+    
+} 
+
+function draw(){
+image(video, 0, 0);
+if(pose){
+     let d = dist(pose.leftEye.x, pose.leftEye.y, pose.rightEye.x, pose.rightEye.y);
+    fill(255,255,255);
+    ellipse(pose.leftEye.x, pose.leftEye.y, d-10);
+    ellipse(pose.rightEye.x, pose.rightEye.y, d-10);
+    fill(25,0,0);
+    ellipse(pose.leftEye.x, pose.leftEye.y+5, d-10);
+    ellipse(pose.rightEye.x, pose.rightEye.y+8, d-10);
+     fill(255,0,0);
+     ellipse(pose.nose.x, pose.nose.y, d-10);
+    
+}    
+    
+}
+
