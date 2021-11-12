@@ -1,0 +1,53 @@
+<html>
+<head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.5/p5.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.5/addons/p5.dom.js"></script>
+	<script src="../lib/p5.speech.js"></script>
+	<script>
+
+	var myRec = new p5.SpeechRec(); // new P5.SpeechRec object
+
+	function getRandomInt(max) {
+  return Math.floor(Math.random() * 250);
+}
+//changed the original code to make the nackground change to the colour the user says, the options I coded were "blue" "pink" and "green"
+
+	function setup()
+	{
+		// graphics stuff:
+		createCanvas(windowWidth, windowHeight);
+		background(getRandomInt(3),getRandomInt(3),getRandomInt(3));
+		fill(0, 0, 0, 255);
+		// instructions:
+		textSize(32);
+		textAlign(CENTER);
+		text("say something", width/2, height/2);
+		myRec.onResult = showResult;
+		myRec.start();
+	}
+
+	function draw()
+	{
+		// why draw when you can talk?
+	}
+
+	function showResult()
+	{
+		if(myRec.resultValue==true) {
+			background(getRandomInt(3),getRandomInt(3),getRandomInt(3));
+			text(myRec.resultString, width/2, height/2);
+			console.log(myRec.resultString);
+		}
+		if(myRec.resultString=="blue"){
+			background(0,0,250)
+
+		}
+		else if(myRec.resultString=="pink"){
+			background(250,128,128)
+
+		}
+		else if(myRec.resultString=="green"){
+			background(0,250,0)
+
+		}
+	}
